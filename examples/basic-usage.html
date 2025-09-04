@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Basic usage example for tanyanxi.github.io components">
+    <title>Basic Usage Example - tanyanxi.github.io</title>
+    <style>
+        /* Example CSS following the project guidelines */
+        :root {
+            --color-primary: #3b82f6;
+            --color-secondary: #6b7280;
+            --color-success: #10b981;
+            --color-danger: #ef4444;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --border-radius: 0.375rem;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: #374151;
+            background-color: #f9fafb;
+        }
+
+        /* Container Component */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-xl);
+            }
+        }
+
+        /* Header Component */
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header__content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) 0;
+        }
+
+        .header__brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .header__logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .header__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .header__nav {
+            display: none;
+            gap: var(--spacing-lg);
+        }
+
+        @media (min-width: 768px) {
+            .header__nav {
+                display: flex;
+            }
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--color-secondary);
+            font-weight: 500;
+            transition: color 0.2s ease;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link--active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* Button Component */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-size: 0.875rem;
+        }
+
+        .btn--primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn--primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn--secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn--secondary:hover {
+            background-color: #e5e7eb;
+            border-color: #9ca3af;
+        }
+
+        .btn--success {
+            background-color: var(--color-success);
+            color: white;
+        }
+
+        .btn--danger {
+            background-color: var(--color-danger);
+            color: white;
+        }
+
+        .btn--small {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn--large {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Card Component */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .card--hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card__header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .card__subtitle {
+            color: var(--color-secondary);
+            font-size: 0.875rem;
+        }
+
+        .card__body {
+            padding: var(--spacing-lg);
+        }
+
+        .card__footer {
+            padding: var(--spacing-lg);
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+        }
+
+        /* Form Components */
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input--error {
+            border-color: var(--color-danger);
+        }
+
+        .form-error {
+            color: var(--color-danger);
+            font-size: 0.75rem;
+            margin-top: var(--spacing-xs);
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        
+        .mt-sm { margin-top: var(--spacing-sm); }
+        .mt-md { margin-top: var(--spacing-md); }
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mt-xl { margin-top: var(--spacing-xl); }
+        
+        .mb-sm { margin-bottom: var(--spacing-sm); }
+        .mb-md { margin-bottom: var(--spacing-md); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        .mb-xl { margin-bottom: var(--spacing-xl); }
+
+        .grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        @media (min-width: 768px) {
+            .grid--2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid--3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Example-specific styles */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary), #1d4ed8);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero__subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section__title {
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            color: #111827;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Component Example -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__brand">
+                    <div class="header__logo">T</div>
+                    <span class="header__title">tanyanxi.github.io</span>
+                </div>
+                
+                <nav class="header__nav" aria-label="Main navigation">
+                    <a href="#home" class="nav-link nav-link--active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 class="hero__title">Welcome to My Portfolio</h1>
+            <p class="hero__subtitle">Showcasing modern web development with clean, accessible design</p>
+            <div>
+                <a href="#projects" class="btn btn--secondary btn--large">View Projects</a>
+                <a href="#contact" class="btn btn--primary btn--large">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Button Examples Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section__title">Button Components</h2>
+            
+            <div class="text-center mb-xl">
+                <h3 class="mb-md">Button Variants</h3>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn--primary">Primary</button>
+                    <button class="btn btn--secondary">Secondary</button>
+                    <button class="btn btn--success">Success</button>
+                    <button class="btn btn--danger">Danger</button>
+                </div>
+            </div>
+
+            <div class="text-center mb-xl">
+                <h3 class="mb-md">Button Sizes</h3>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+                    <button class="btn btn--primary btn--small">Small</button>
+                    <button class="btn btn--primary">Medium</button>
+                    <button class="btn btn--primary btn--large">Large</button>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <h3 class="mb-md">Button States</h3>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn--primary">Normal</button>
+                    <button class="btn btn--primary" disabled>Disabled</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Card Examples Section -->
+    <section class="section" style="background: #f3f4f6;">
+        <div class="container">
+            <h2 class="section__title">Card Components</h2>
+            
+            <div class="grid grid--3">
+                <div class="card card--hover">
+                    <div class="card__header">
+                        <h3 class="card__title">Project Alpha</h3>
+                        <span class="card__subtitle">Web Application</span>
+                    </div>
+                    <div class="card__body">
+                        <p>A modern web application built with HTML5, CSS3, and JavaScript. Features responsive design and accessibility compliance.</p>
+                    </div>
+                    <div class="card__footer">
+                        <button class="btn btn--secondary btn--small">Preview</button>
+                        <button class="btn btn--primary btn--small">View Code</button>
+                    </div>
+                </div>
+
+                <div class="card card--hover">
+                    <div class="card__header">
+                        <h3 class="card__title">Project Beta</h3>
+                        <span class="card__subtitle">Mobile App</span>
+                    </div>
+                    <div class="card__body">
+                        <p>Cross-platform mobile application with native performance. Built using progressive web app technologies.</p>
+                    </div>
+                    <div class="card__footer">
+                        <button class="btn btn--secondary btn--small">Preview</button>
+                        <button class="btn btn--primary btn--small">View Code</button>
+                    </div>
+                </div>
+
+                <div class="card card--hover">
+                    <div class="card__header">
+                        <h3 class="card__title">Project Gamma</h3>
+                        <span class="card__subtitle">API Service</span>
+                    </div>
+                    <div class="card__body">
+                        <p>RESTful API service with comprehensive documentation. Includes authentication, rate limiting, and monitoring.</p>
+                    </div>
+                    <div class="card__footer">
+                        <button class="btn btn--secondary btn--small">Docs</button>
+                        <button class="btn btn--primary btn--small">View Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Examples Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section__title">Form Components</h2>
+            
+            <div style="max-width: 600px; margin: 0 auto;">
+                <div class="card">
+                    <div class="card__header">
+                        <h3 class="card__title">Contact Form</h3>
+                        <span class="card__subtitle">Get in touch with me</span>
+                    </div>
+                    <div class="card__body">
+                        <form>
+                            <div class="form-group">
+                                <label for="name" class="form-label">Name *</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" name="subject" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="form-label">Message *</label>
+                                <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card__footer">
+                        <button type="button" class="btn btn--secondary">Clear</button>
+                        <button type="submit" class="btn btn--primary">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Example JavaScript following project guidelines
+        
+        /**
+         * Handles form submission with validation
+         * @param {Event} event - The form submit event
+         */
+        const handleFormSubmit = (event) => {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Validate required fields
+            const requiredFields = ['name', 'email', 'message'];
+            const errors = [];
+            
+            requiredFields.forEach(field => {
+                if (!data[field] || data[field].trim() === '') {
+                    errors.push(`${field} is required`);
+                }
+            });
+            
+            if (errors.length > 0) {
+                alert('Please fill in all required fields:\n' + errors.join('\n'));
+                return;
+            }
+            
+            // Simulate form submission
+            console.log('Form submitted:', data);
+            alert('Thank you for your message! I\'ll get back to you soon.');
+        };
+        
+        /**
+         * Adds smooth scrolling to navigation links
+         */
+        const initSmoothScrolling = () => {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        };
+        
+        /**
+         * Updates active navigation link based on scroll position
+         */
+        const updateActiveNavLink = () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('nav-link--active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('nav-link--active');
+                }
+            });
+        };
+        
+        // Initialize functionality when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add form submission handler
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+            }
+            
+            // Initialize smooth scrolling
+            initSmoothScrolling();
+            
+            // Update active nav link on scroll
+            window.addEventListener('scroll', updateActiveNavLink);
+            
+            // Set initial active nav link
+            updateActiveNavLink();
+            
+            console.log('Basic usage example initialized successfully!');
+        });
+    </script>
+</body>
+</html>
